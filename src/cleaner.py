@@ -96,3 +96,43 @@ def handling_outliers(data: np.ndarray,threshold: float=3):
 
 
 
+
+
+def normalize_numeric(data: np.ndarray, model: str = 'z-score') -> np.ndarray:
+    numeric_data = detect_numeric_columns(data)
+    for col in numeric_data:
+        col_data = data[:,col].astype(float)
+        if model == 'z-score':
+            std = np.std(col_data)
+            mean = np.mean(col_data)
+            col_data = (col_data - mean)/std
+        elif model == 'min-max':
+            col_data = (col_data - np.min(col_data))/(np.max(col_data) - np.min(col_data))
+        data[:,col] = col_data.astype(str)
+    return data
+
+
+
+
+# --- Test data ---
+array = np.array([
+    ['Alice', '25', '50000'],
+    ['Bob', '30', '60000'],
+    ['Charlie', '35', '80000'],
+    ['David', '40', '90000']
+])
+
+print("Original Data:")
+print(array)
+
+# --- Run function ---
+normalized_data = normalize_numeric(array.copy(), model='z-score')
+
+print("\nAfter Normalization (Z-Score):")
+print(normalized_data)
+
+# --- Run Min-Max Normalization ---
+normalized_data_minmax = normalize_numeric(array.copy(), model='min-max')
+
+print("\nAfter Normalization (Min-Max):")
+print(normalized_data_minmax)
