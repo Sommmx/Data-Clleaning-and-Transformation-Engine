@@ -114,25 +114,16 @@ def normalize_numeric(data: np.ndarray, model: str = 'z-score') -> np.ndarray:
 
 
 
-# --- Test data ---
-array = np.array([
-    ['Alice', '25', '50000'],
-    ['Bob', '30', '60000'],
-    ['Charlie', '35', '80000'],
-    ['David', '40', '90000']
-])
-
-print("Original Data:")
-print(array)
-
-# --- Run function ---
-normalized_data = normalize_numeric(array.copy(), model='z-score')
-
-print("\nAfter Normalization (Z-Score):")
-print(normalized_data)
-
-# --- Run Min-Max Normalization ---
-normalized_data_minmax = normalize_numeric(array.copy(), model='min-max')
-
-print("\nAfter Normalization (Min-Max):")
-print(normalized_data_minmax)
+'''Encode_categorical'''
+def encode_categorical(
+        data: np.ndarray,
+        save_mapping: bool = False
+) -> Union[np.ndarray, Dict[int,Dict[str,int]]]:
+    categoric_data = detect_categorical_columns(data)
+    mapping = {}
+    for col in categoric_data:
+        unique_val = np.unique(data[:,col])
+        col_mapping = {val:idx for idx,val in enumerate(unique_val)}
+        data[:,col] = np.array(col_mapping[val] for val in data[:,col])
+        mapping[col] = col_mapping
+    return (data,mapping) if save_mapping else data
