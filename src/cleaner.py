@@ -13,8 +13,8 @@ def load_csv(file_path):
 
 data = load_csv(file_path)
 
-print(data)
-print("##########################################################3")
+# print(data)
+# print("##########################################################3")
 
 
 
@@ -75,8 +75,24 @@ def handling_missing_values(data: np.ndarray,numeric_strategy: str = 'mean',cate
 
 
 
-print(handling_missing_values(data))
+# print(handling_missing_values(data))
 
+
+
+'''Handling Outliers'''
+def handling_outliers(data: np.ndarray,threshold: float=3):
+    numeric_data = detect_numeric_columns(data)
+
+    for col in numeric_data:
+        col_data = data[:,col].astype(float)
+        mean = np.mean(col_data)
+        std = np.std(col_data)
+        z = (col_data - mean)/std
+        print(z)
+        median = np.median(col_data)
+        col_data = np.where(np.abs(z) > threshold, median, col_data)
+        data[:,col] = col_data.astype(str)
+    return data
 
 
 
