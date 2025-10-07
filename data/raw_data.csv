@@ -1,0 +1,11 @@
+id,name,age,income,city
+1,John,29,50000,New York
+2,Mary,,60000,Los Angeles
+3,Bob,31,,Chicago
+4,Lucy,22,45000,New York
+5,Alex,200,90000,Los Angeles
+6,Linda,27,100000,
+7,Sam,29,30000,New York
+8,Kate,,25000,Unknown
+9,Tom,35,70000,Chicago
+10,Alice,28,,Los Angeles
