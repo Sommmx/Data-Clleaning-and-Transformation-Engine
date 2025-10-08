@@ -3,25 +3,6 @@ from typing import List, Optional, Dict, Union
 
 
 
-
-file_path = "data/raw_data.csv"
-
-
-def load_csv(file_path):
-    data = np.genfromtxt(file_path, delimiter=',',dtype=str,skip_header=1)
-    return data
-
-data = load_csv(file_path)
-
-# print(data)
-# print("##########################################################3")
-
-
-
-
-
-
-
 '''Numeric and Categorical Columns'''
 def detect_numeric_columns(data : np.ndarray) -> List[int]:
     numeric_columns = []
@@ -124,6 +105,6 @@ def encode_categorical(
     for col in categoric_data:
         unique_val = np.unique(data[:,col])
         col_mapping = {val:idx for idx,val in enumerate(unique_val)}
-        data[:,col] = np.array(col_mapping[val] for val in data[:,col])
+        data[:,col] = np.array([col_mapping[val] for val in data[:,col]])
         mapping[col] = col_mapping
     return (data,mapping) if save_mapping else data
